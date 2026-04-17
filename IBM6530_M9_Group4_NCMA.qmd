@@ -1,0 +1,19 @@
+---
+title: "Milestone 9: Attribution Module Memo"
+author: "Kayla Cortez, Matthew Melgar, Jamie Min, Mehrnoosh Solgi, Roxana Rodriguez"
+date: today
+format:
+  html:
+   theme: cosmo
+   toc: true
+   toc-depth: 4
+   number-sections: false
+   code-line-numbers: true
+   code-link: true
+   code-fold: false
+   embed-resources: true
+editor: visual
+execute:
+  freeze: auto
+  warning: false
+---
