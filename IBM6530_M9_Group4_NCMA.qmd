@@ -17,3 +17,67 @@ execute:
   freeze: auto
   warning: false
 ---
+
+## Deliverable 1 — Path Dataset Definition
+
+### Unit of Analysis
+
+The unit of analysis for NCMA SGV GA4 website data consists of a user-level conversion path that has been structured from session-level data. For example, we used identifiers such as user_pseudo_id and ga_session_id to combine multiple sessions and create the full user journey from the website. Each path contains multiple sessions that belong to a single user within a specific timeframe, which helps us identify multiple user behaviors across channels and to understand how users interact with the website before completing a desired action, such as membership purchase or newsletter sign-up. 
+
+### What counts as a touchpoint
+
+A touchpoint isa session-level interaction that is usually linked to a type of traffic source or medium. Each session contains one touchpoint by traffic channel, such as organic search, direct, or referral, and sources such as Google, direct, or none. The data also shows additional dimensions such as device category and geographic location. From the data it can be seen that each row is a single touchpoint containing engagement metrics such as engaged session and average engagement time. 
+
+### Lookback Window
+
+For the dataset, the lookback window can be defined within a 30-day timeframe, meaning that all sessions within this period are considered in the user’s conversion path. A 30-day timeframe is appropriate because it captures all interactions across the different channels and reflects the user behavior, such as how they engage with this site, since potential customers for NCMA SGV may like to explore the membership information before purchasing. This lookback window also provides enough time to capture user interactions over time. 
+
+### How you handle direct/none, missing UTMs, cross-device limitations
+
+From previous Mart views in BigQuery, direct traffic is often defined as "direct" and "none," and it’s included as a valid touchpoint. Also, if a prior session has a known source of traffic, this may be interpreted as continued engagement rather than a new acquisition channel, which may avoid over-attribution. A limitation the NCMA SGV website has is that it has missing UTM parameters, so when the traffic source is known, GA4 would define it as “Google” or with a specific name such as "link.edgepilot.com." However, when the traffic origins are not known, GA4 categorizes the website traffic that should have a UTM parameter as “Unknown.” Another limitation of the GA4 dataset is that because it relies on user_pseudo_id, users that interact with the website from multiple devices may be treated as separate users and this may fragment the user conversion path. 
+
+### How you define “conversion” 
+
+For the NCMA SGV website, a conversion should be defined as a session in which a user successfully purchased a membership subscription or event registration, as this aligns with the primary goal of driving membership growth and event participation. Some user conversions can include form submissions to classify a user as interested in the memberships, clicks on registration buttons or simply general engagement such as views on event pages. All these website user behaviors can give insights on the level of user intent to analyze how much interest there is in the memberships and events but also on overall website performance. 
+
+## Deliverable 2 — Method Rationale (0.5 - 1 page)
+
+Choose one (or more) and justify:
+
+-   rules-based (first/last, position-based, time-decay)
+
+-   Markov chain removal effects
+
+-   Shapley/value-based approximations
+
+-   simple assisted conversion logic
+
+Explain why your method matches:
+
+-   data quality
+
+-   sample size
+
+-   client decision needs
+
+## Deliverable 3 — Results, Implications, Limitations, Next Tests (2–4 pages)
+
+Include:
+
+-   ranked channels/campaigns by attributed value
+
+-   how results differ from last-click (if applicable)
+
+-   at least 3 recommendations grounded in findings
+
+## Deliverable 4 — Limitations + Next Tests
+
+Be explicit about:
+
+-   tracking gaps
+
+-   missing touchpoints (walled gardens, offline)
+
+-   low volume uncertainty
+
+-   suggested next tests (measurement improvements, experiments, etc.)

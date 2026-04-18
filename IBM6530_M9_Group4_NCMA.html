@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kayla Cortez, Matthew Melgar, Jamie Min, Mehrnoosh Solgi, Roxana Rodriguez">
-<meta name="dcterms.date" content="2026-04-16">
+<meta name="dcterms.date" content="2026-04-18">
 
 <title>Milestone 9: Attribution Module Memo</title>
 <style>
@@ -2169,8 +2169,24 @@ vertical-align: -.125em;
 <body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-  
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#deliverable-1-path-dataset-definition" id="toc-deliverable-1-path-dataset-definition" class="nav-link active" data-scroll-target="#deliverable-1-path-dataset-definition">Deliverable 1 — Path Dataset Definition</a>
+  <ul>
+  <li><a href="#unit-of-analysis" id="toc-unit-of-analysis" class="nav-link" data-scroll-target="#unit-of-analysis">Unit of Analysis</a></li>
+  <li><a href="#what-counts-as-a-touchpoint" id="toc-what-counts-as-a-touchpoint" class="nav-link" data-scroll-target="#what-counts-as-a-touchpoint">What counts as a touchpoint</a></li>
+  <li><a href="#lookback-window" id="toc-lookback-window" class="nav-link" data-scroll-target="#lookback-window">Lookback Window</a></li>
+  <li><a href="#how-you-handle-directnone-missing-utms-cross-device-limitations" id="toc-how-you-handle-directnone-missing-utms-cross-device-limitations" class="nav-link" data-scroll-target="#how-you-handle-directnone-missing-utms-cross-device-limitations">How you handle direct/none, missing UTMs, cross-device limitations</a></li>
+  <li><a href="#how-you-define-conversion" id="toc-how-you-define-conversion" class="nav-link" data-scroll-target="#how-you-define-conversion">How you define “conversion” </a></li>
+  </ul></li>
+  <li><a href="#deliverable-2-method-rationale-0.5---1-page" id="toc-deliverable-2-method-rationale-0.5---1-page" class="nav-link" data-scroll-target="#deliverable-2-method-rationale-0.5---1-page">Deliverable 2 — Method Rationale (0.5 - 1 page)</a></li>
+  <li><a href="#deliverable-3-results-implications-limitations-next-tests-24-pages" id="toc-deliverable-3-results-implications-limitations-next-tests-24-pages" class="nav-link" data-scroll-target="#deliverable-3-results-implications-limitations-next-tests-24-pages">Deliverable 3 — Results, Implications, Limitations, Next Tests (2–4 pages)</a></li>
+  <li><a href="#deliverable-4-limitations-next-tests" id="toc-deliverable-4-limitations-next-tests" class="nav-link" data-scroll-target="#deliverable-4-limitations-next-tests">Deliverable 4 — Limitations + Next Tests</a></li>
+  </ul>
+</nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -2193,7 +2209,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 16, 2026</p>
+      <p class="date">April 18, 2026</p>
     </div>
   </div>
   
@@ -2205,7 +2221,64 @@ vertical-align: -.125em;
 </header>
 
 
-
+<section id="deliverable-1-path-dataset-definition" class="level2">
+<h2 class="anchored" data-anchor-id="deliverable-1-path-dataset-definition">Deliverable 1 — Path Dataset Definition</h2>
+<section id="unit-of-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="unit-of-analysis">Unit of Analysis</h3>
+<p>The unit of analysis for NCMA SGV GA4 website data consists of a user-level conversion path that has been structured from session-level data. For example, we used identifiers such as user_pseudo_id and ga_session_id to combine multiple sessions and create the full user journey from the website. Each path contains multiple sessions that belong to a single user within a specific timeframe, which helps us identify multiple user behaviors across channels and to understand how users interact with the website before completing a desired action, such as membership purchase or newsletter sign-up. </p>
+</section>
+<section id="what-counts-as-a-touchpoint" class="level3">
+<h3 class="anchored" data-anchor-id="what-counts-as-a-touchpoint">What counts as a touchpoint</h3>
+<p>A touchpoint isa session-level interaction that is usually linked to a type of traffic source or medium. Each session contains one touchpoint by traffic channel, such as organic search, direct, or referral, and sources such as Google, direct, or none. The data also shows additional dimensions such as device category and geographic location. From the data it can be seen that each row is a single touchpoint containing engagement metrics such as engaged session and average engagement time. </p>
+</section>
+<section id="lookback-window" class="level3">
+<h3 class="anchored" data-anchor-id="lookback-window">Lookback Window</h3>
+<p>For the dataset, the lookback window can be defined within a 30-day timeframe, meaning that all sessions within this period are considered in the user’s conversion path. A 30-day timeframe is appropriate because it captures all interactions across the different channels and reflects the user behavior, such as how they engage with this site, since potential customers for NCMA SGV may like to explore the membership information before purchasing. This lookback window also provides enough time to capture user interactions over time. </p>
+</section>
+<section id="how-you-handle-directnone-missing-utms-cross-device-limitations" class="level3">
+<h3 class="anchored" data-anchor-id="how-you-handle-directnone-missing-utms-cross-device-limitations">How you handle direct/none, missing UTMs, cross-device limitations</h3>
+<p>From previous Mart views in BigQuery, direct traffic is often defined as “direct” and “none,” and it’s included as a valid touchpoint. Also, if a prior session has a known source of traffic, this may be interpreted as continued engagement rather than a new acquisition channel, which may avoid over-attribution. A limitation the NCMA SGV website has is that it has missing UTM parameters, so when the traffic source is known, GA4 would define it as “Google” or with a specific name such as “link.edgepilot.com.” However, when the traffic origins are not known, GA4 categorizes the website traffic that should have a UTM parameter as “Unknown.” Another limitation of the GA4 dataset is that because it relies on user_pseudo_id, users that interact with the website from multiple devices may be treated as separate users and this may fragment the user conversion path. </p>
+</section>
+<section id="how-you-define-conversion" class="level3">
+<h3 class="anchored" data-anchor-id="how-you-define-conversion">How you define “conversion” </h3>
+<p>For the NCMA SGV website, a conversion should be defined as a session in which a user successfully purchased a membership subscription or event registration, as this aligns with the primary goal of driving membership growth and event participation. Some user conversions can include form submissions to classify a user as interested in the memberships, clicks on registration buttons or simply general engagement such as views on event pages. All these website user behaviors can give insights on the level of user intent to analyze how much interest there is in the memberships and events but also on overall website performance. </p>
+</section>
+</section>
+<section id="deliverable-2-method-rationale-0.5---1-page" class="level2">
+<h2 class="anchored" data-anchor-id="deliverable-2-method-rationale-0.5---1-page">Deliverable 2 — Method Rationale (0.5 - 1 page)</h2>
+<p>Choose one (or more) and justify:</p>
+<ul>
+<li><p>rules-based (first/last, position-based, time-decay)</p></li>
+<li><p>Markov chain removal effects</p></li>
+<li><p>Shapley/value-based approximations</p></li>
+<li><p>simple assisted conversion logic</p></li>
+</ul>
+<p>Explain why your method matches:</p>
+<ul>
+<li><p>data quality</p></li>
+<li><p>sample size</p></li>
+<li><p>client decision needs</p></li>
+</ul>
+</section>
+<section id="deliverable-3-results-implications-limitations-next-tests-24-pages" class="level2">
+<h2 class="anchored" data-anchor-id="deliverable-3-results-implications-limitations-next-tests-24-pages">Deliverable 3 — Results, Implications, Limitations, Next Tests (2–4 pages)</h2>
+<p>Include:</p>
+<ul>
+<li><p>ranked channels/campaigns by attributed value</p></li>
+<li><p>how results differ from last-click (if applicable)</p></li>
+<li><p>at least 3 recommendations grounded in findings</p></li>
+</ul>
+</section>
+<section id="deliverable-4-limitations-next-tests" class="level2">
+<h2 class="anchored" data-anchor-id="deliverable-4-limitations-next-tests">Deliverable 4 — Limitations + Next Tests</h2>
+<p>Be explicit about:</p>
+<ul>
+<li><p>tracking gaps</p></li>
+<li><p>missing touchpoints (walled gardens, offline)</p></li>
+<li><p>low volume uncertainty</p></li>
+<li><p>suggested next tests (measurement improvements, experiments, etc.)</p></li>
+</ul>
+</section>
 
 </main>
 <!-- /main column -->
