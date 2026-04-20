@@ -69,6 +69,60 @@ Include:
 -   how results differ from last-click (if applicable)
 
 -   at least 3 recommendations grounded in findings
+Attribution Module
+
+## Ranked channels by attributed value
+
+```{r}
+channel_rank <- ds |>
+  group_by(channel) |>
+  summarise(
+    total_sessions = sum(sessions, na.rm = TRUE),
+    total_purchases = sum(purchases, na.rm = TRUE),
+    total_revenue = sum(revenue, na.rm = TRUE)
+  ) |>
+  arrange(desc(total_purchases)) |>
+  collect()
+
+channel_rank
+```
+
+Channels were ranked based on total purchases as a proxy for attributed value. The results show that while some channels generate higher traffic, they do not necessarily produce the highest number of purchases, indicating differences in channel effectiveness.
+
+# Campaign-level (use source + medium)
+
+```{r}
+campaign_rank <- ds |>
+  group_by(source, medium) |>
+  summarise(
+    total_sessions = sum(sessions, na.rm = TRUE),
+    total_purchases = sum(purchases, na.rm = TRUE)
+  ) |>
+  arrange(desc(total_purchases)) |>
+  collect()
+
+campaign_rank
+```
+# Compare to last-click
+##conceptual
+
+This analysis approximates attribution using aggregated metrics rather than a true multi-touch attribution model. Compared to a traditional last-click approach, which assigns full credit to the final interaction, this method highlights broader channel contributions through engagement and session volume. As a result, some channels that may appear less valuable under last-click attribution (due to fewer direct conversions) may still play an important role in earlier stages of the user journey.
+
+###Recommendation 1 — Optimize high-conversion channels
+Channels with higher purchase-to-session ratios should be prioritized for budget allocation, as they demonstrate stronger conversion efficiency compared to high-traffic but low-converting channels.
+
+###Recommendation 2 — Investigate traffic spikes
+The presence of spikes in session activity suggests that certain campaigns or events drive short-term increases in traffic. Identifying and replicating these drivers could help stabilize and grow user engagement over time.
+
+###Recommendation 3 — Improve low-performing segments
+Channels or device categories with high traffic but low engagement or conversion rates should be further analyzed to identify potential issues such as poor targeting, weak messaging, or suboptimal user experience.
+
+Additional tracking or attribution modeling should be implemented to better understand multi-touch customer journeys and improve decision-making beyond last-click metrics.
+
+```{r}
+channel_rank
+```
+
 
 ## Deliverable 4 — Limitations + Next Tests
 
