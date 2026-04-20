@@ -140,8 +140,18 @@ Be explicit about:
 
 -   tracking gaps
 
--   missing touchpoints (walled gardens, offline)
+  - When it comes to analyzing GA4 data metrics from sessions, purchases, revenue which is grouped by channel and campaign. This means that the accuracy depends consistent tracking and tagging. If we don't use UTM tracking parameters properly it can cause traffic to misclassified. This will impact how channels are ranked and interpreted
 
--   low volume uncertainty
+- missing touchpoints (walled gardens, offline)
 
--   suggested next tests (measurement improvements, experiments, etc.)
+  - GA4 may not capture all interactions. Activity outside the website such as LinkedIn and other social media channels may not provide the full picture, it will provide us partial data. For example, channel source and where are users coming from when they visit the website, but not the early-stage interactions. This means that the analysis that we are doing is only what is visible to us through the website.
+
+- low volume uncertainty
+
+  - If NCMA website has low website traffic or purchase counts the results may become less reliable. Small changes in the data can impact how the results will be interpreted, such as if we have a campaign it may influence our results to be seen not effective or more than effective.
+
+- suggested next tests (measurement improvements, experiments, etc.)
+
+  - Suggested improvements:
+
+    - Implement consistent UTM naming conventions across future campaigns such as source, medium, and campaign. With these in mind it will be important to audit tagging regularly. As well as enable or look into in being able to multi-touchpoints such as Markov Model. This will help capture channels accross the user's journey.
