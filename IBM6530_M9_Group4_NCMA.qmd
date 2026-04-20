@@ -71,6 +71,18 @@ Include:
 -   at least 3 recommendations grounded in findings
 Attribution Module
 
+```{r}
+library(arrow)
+library(dplyr)
+library(ggplot2)
+
+data_path <- "channel_daily_kpis_v1"
+
+ds <- open_dataset("channel_daily_kpis_v1")
+
+ds
+```
+
 ## Ranked channels by attributed value
 
 ```{r}
