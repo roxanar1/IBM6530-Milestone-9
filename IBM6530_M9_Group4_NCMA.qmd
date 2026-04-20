@@ -18,6 +18,8 @@ execute:
   warning: false
 ---
 
+**Repo Link:** <https://github.com/roxanar1/IBM6530-Milestone-9.git>
+
 ## Deliverable 1 — Path Dataset Definition
 
 ### Unit of Analysis
@@ -40,7 +42,7 @@ From previous Mart views in BigQuery, direct traffic is often defined as "direct
 
 For the NCMA SGV website, a conversion should be defined as a session in which a user successfully purchased a membership subscription or event registration, as this aligns with the primary goal of driving membership growth and event participation. Some user conversions can include form submissions to classify a user as interested in the memberships, clicks on registration buttons or simply general engagement such as views on event pages. All these website user behaviors can give insights on the level of user intent to analyze how much interest there is in the memberships and events but also on overall website performance. 
 
-## Deliverable 2 — Method Rationale (0.5 - 1 page)
+## Deliverable 2 — Method Rationale
 
 We selected position-based (U-shaped) attribution as our primary method, with last-click as a comparison baseline.
 
@@ -52,22 +54,13 @@ First, NCMA SGV is a membership-driven nonprofit where awareness genuinely matte
 
 Second, the final touchpoint before a membership purchase also matters, it's what pushed the user to convert. Giving it equal weight to the first touch reflects that both ends of the journey are strategically important for a client deciding where to invest in outreach versus retention.
 
-Why last-click as a baseline?
-Last-click is what most GA4 reports default to, and it's what the client likely already sees in their dashboard. Running both models lets us flag the gap: channels that look weak under last-click but score higher under position-based are probably doing awareness or mid-funnel work that would be quietly cut if the client relied on GA4 defaults alone. That comparison is where the actionable insight lives.
+Why last-click as a baseline? Last-click is what most GA4 reports default to, and it's what the client likely already sees in their dashboard. Running both models lets us flag the gap: channels that look weak under last-click but score higher under position-based are probably doing awareness or mid-funnel work that would be quietly cut if the client relied on GA4 defaults alone. That comparison is where the actionable insight lives.
 
-What this method can and cannot do:
-Position-based attribution applied to aggregated data is a reasonable approximation, not a precise causal model. We're inferring channel roles from volume and conversion patterns rather than tracking individual journeys. The model assumes channels behave consistently across the lookback window, which may not hold if campaign activity shifted significantly between February and March. These constraints go directly into our limitations section.
+What this method can and cannot do: Position-based attribution applied to aggregated data is a reasonable approximation, not a precise causal model. We're inferring channel roles from volume and conversion patterns rather than tracking individual journeys. The model assumes channels behave consistently across the lookback window, which may not hold if campaign activity shifted significantly between February and March. These constraints go directly into our limitations section.
 
 ## Deliverable 3 — Results, Implications, Limitations, Next Tests (2–4 pages)
 
-Include:
-
--   ranked channels/campaigns by attributed value
-
--   how results differ from last-click (if applicable)
-
--   at least 3 recommendations grounded in findings
-Attribution Module
+### Attribution Module
 
 ```{r}
 library(arrow)
@@ -81,7 +74,7 @@ ds <- open_dataset("channel_daily_kpis_v1")
 ds
 ```
 
-## Ranked channels by attributed value
+### Ranked channels by attributed value
 
 ```{r}
 channel_rank <- ds |>
@@ -99,7 +92,7 @@ channel_rank
 
 Channels were ranked based on total purchases as a proxy for attributed value. The results show that while some channels generate higher traffic, they do not necessarily produce the highest number of purchases, indicating differences in channel effectiveness.
 
-# Campaign-level (use source + medium)
+### Campaign-level (use source + medium)
 
 ```{r}
 campaign_rank <- ds |>
@@ -113,19 +106,18 @@ campaign_rank <- ds |>
 
 campaign_rank
 ```
-# Compare to last-click
-##conceptual
+
+### Compare to last-click
+
+#### **conceptual**
 
 This analysis approximates attribution using aggregated metrics rather than a true multi-touch attribution model. Compared to a traditional last-click approach, which assigns full credit to the final interaction, this method highlights broader channel contributions through engagement and session volume. As a result, some channels that may appear less valuable under last-click attribution (due to fewer direct conversions) may still play an important role in earlier stages of the user journey.
 
-###Recommendation 1 — Optimize high-conversion channels
-Channels with higher purchase-to-session ratios should be prioritized for budget allocation, as they demonstrate stronger conversion efficiency compared to high-traffic but low-converting channels.
+**Recommendation 1 — Optimize high-conversion channels** Channels with higher purchase-to-session ratios should be prioritized for budget allocation, as they demonstrate stronger conversion efficiency compared to high-traffic but low-converting channels.
 
-###Recommendation 2 — Investigate traffic spikes
-The presence of spikes in session activity suggests that certain campaigns or events drive short-term increases in traffic. Identifying and replicating these drivers could help stabilize and grow user engagement over time.
+**Recommendation 2 — Investigate traffic spikes** The presence of spikes in session activity suggests that certain campaigns or events drive short-term increases in traffic. Identifying and replicating these drivers could help stabilize and grow user engagement over time.
 
-###Recommendation 3 — Improve low-performing segments
-Channels or device categories with high traffic but low engagement or conversion rates should be further analyzed to identify potential issues such as poor targeting, weak messaging, or suboptimal user experience.
+**Recommendation 3 — Improve low-performing segments** Channels or device categories with high traffic but low engagement or conversion rates should be further analyzed to identify potential issues such as poor targeting, weak messaging, or suboptimal user experience.
 
 Additional tracking or attribution modeling should be implemented to better understand multi-touch customer journeys and improve decision-making beyond last-click metrics.
 
@@ -133,25 +125,24 @@ Additional tracking or attribution modeling should be implemented to better unde
 channel_rank
 ```
 
-
 ## Deliverable 4 — Limitations + Next Tests
 
 Be explicit about:
 
--   tracking gaps
+-   **Tracking gaps**
 
-  - When it comes to analyzing GA4 data metrics from sessions, purchases, revenue which is grouped by channel and campaign. This means that the accuracy depends consistent tracking and tagging. If we don't use UTM tracking parameters properly it can cause traffic to misclassified. This will impact how channels are ranked and interpreted
+-   When it comes to analyzing GA4 data metrics from sessions, purchases, revenue which is grouped by channel and campaign. This means that the accuracy depends consistent tracking and tagging. If we don't use UTM tracking parameters properly it can cause traffic to misclassified. This will impact how channels are ranked and interpreted
 
-- missing touchpoints (walled gardens, offline)
+-   **Missing touchpoints (walled gardens, offline)**
 
-  - GA4 may not capture all interactions. Activity outside the website such as LinkedIn and other social media channels may not provide the full picture, it will provide us partial data. For example, channel source and where are users coming from when they visit the website, but not the early-stage interactions. This means that the analysis that we are doing is only what is visible to us through the website.
+    -   GA4 may not capture all interactions. Activity outside the website such as LinkedIn and other social media channels may not provide the full picture, it will provide us partial data. For example, channel source and where are users coming from when they visit the website, but not the early-stage interactions. This means that the analysis that we are doing is only what is visible to us through the website.
 
-- low volume uncertainty
+-   **Low volume uncertainty**
 
-  - If NCMA website has low website traffic or purchase counts the results may become less reliable. Small changes in the data can impact how the results will be interpreted, such as if we have a campaign it may influence our results to be seen not effective or more than effective.
+    -   If NCMA website has low website traffic or purchase counts the results may become less reliable. Small changes in the data can impact how the results will be interpreted, such as if we have a campaign it may influence our results to be seen not effective or more than effective.
 
-- suggested next tests (measurement improvements, experiments, etc.)
+-   **Suggested next tests (measurement improvements, experiments, etc.)**
 
-  - Suggested improvements:
+    -   Suggested improvements:
 
-    - Implement consistent UTM naming conventions across future campaigns such as source, medium, and campaign. With these in mind it will be important to audit tagging regularly. As well as enable or look into in being able to multi-touchpoints such as Markov Model. This will help capture channels accross the user's journey.
+        -   Implement consistent UTM naming conventions across future campaigns such as source, medium, and campaign. With these in mind it will be important to audit tagging regularly. As well as enable or look into in being able to multi-touchpoints such as Markov Model. This will help capture channels accross the user's journey.
