@@ -17,6 +17,21 @@ execute:
   freeze: auto
   warning: false
 ---
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(bigrquery)
+library(DBI)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(ChannelAttribution)
+library(knitr)
+library(kableExtra)
+
+```
 
 ## Deliverable 1 — Path Dataset Definition
 
