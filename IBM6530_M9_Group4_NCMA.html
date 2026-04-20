@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Kayla Cortez, Matthew Melgar, Jamie Min, Mehrnoosh Solgi, Roxana Rodriguez">
 <meta name="dcterms.date" content="2026-04-19">
@@ -2211,7 +2211,12 @@ vertical-align: -.125em;
   <li><a href="#how-you-define-conversion" id="toc-how-you-define-conversion" class="nav-link" data-scroll-target="#how-you-define-conversion">How you define “conversion” </a></li>
   </ul>
 </li>
-  <li><a href="#deliverable-2-method-rationale" id="toc-deliverable-2-method-rationale" class="nav-link" data-scroll-target="#deliverable-2-method-rationale">Deliverable 2 — Method Rationale</a></li>
+  <li>
+<a href="#deliverable-2-method-rationale" id="toc-deliverable-2-method-rationale" class="nav-link" data-scroll-target="#deliverable-2-method-rationale">Deliverable 2 — Method Rationale</a>
+  <ul>
+<li><a href="#chosen-method-last-click-attribution-with-session-based-channel-ranking" id="toc-chosen-method-last-click-attribution-with-session-based-channel-ranking" class="nav-link" data-scroll-target="#chosen-method-last-click-attribution-with-session-based-channel-ranking">Chosen Method: Last-Click Attribution with Session-Based Channel Ranking</a></li>
+  </ul>
+</li>
   <li>
 <a href="#deliverable-3-results-implications-limitations-next-tests-24-pages" id="toc-deliverable-3-results-implications-limitations-next-tests-24-pages" class="nav-link" data-scroll-target="#deliverable-3-results-implications-limitations-next-tests-24-pages">Deliverable 3 — Results, Implications, Limitations, Next Tests (2–4 pages)</a>
   <ul>
@@ -2269,14 +2274,18 @@ vertical-align: -.125em;
 </section><section id="how-you-define-conversion" class="level3"><h3 class="anchored" data-anchor-id="how-you-define-conversion">How you define “conversion” </h3>
 <p>For the NCMA SGV website, a conversion should be defined as a session in which a user successfully purchased a membership subscription or event registration, as this aligns with the primary goal of driving membership growth and event participation. Some user conversions can include form submissions to classify a user as interested in the memberships, clicks on registration buttons or simply general engagement such as views on event pages. All these website user behaviors can give insights on the level of user intent to analyze how much interest there is in the memberships and events but also on overall website performance. </p>
 </section></section><section id="deliverable-2-method-rationale" class="level2"><h2 class="anchored" data-anchor-id="deliverable-2-method-rationale">Deliverable 2 — Method Rationale</h2>
-<p>We selected position-based (U-shaped) attribution as our primary method, with last-click as a comparison baseline.</p>
-<p>Explain why your method matches:</p>
-<p>Position-based attribution splits credit across the conversion path by role rather than sequence. The first and last touchpoints each receive 40% of the credit, with the remaining 20% distributed evenly across any middle interactions. This fits our client context for two reasons.</p>
-<p>First, NCMA SGV is a membership-driven nonprofit where awareness genuinely matters. A user who first discovers the organization through organic search behaves differently from one who comes back directly after receiving an email. Giving the first touch meaningful weight captures that initial acquisition moment, which last-click attribution would erase entirely.</p>
-<p>Second, the final touchpoint before a membership purchase also matters, it’s what pushed the user to convert. Giving it equal weight to the first touch reflects that both ends of the journey are strategically important for a client deciding where to invest in outreach versus retention.</p>
-<p>Why last-click as a baseline? Last-click is what most GA4 reports default to, and it’s what the client likely already sees in their dashboard. Running both models lets us flag the gap: channels that look weak under last-click but score higher under position-based are probably doing awareness or mid-funnel work that would be quietly cut if the client relied on GA4 defaults alone. That comparison is where the actionable insight lives.</p>
-<p>What this method can and cannot do: Position-based attribution applied to aggregated data is a reasonable approximation, not a precise causal model. We’re inferring channel roles from volume and conversion patterns rather than tracking individual journeys. The model assumes channels behave consistently across the lookback window, which may not hold if campaign activity shifted significantly between February and March. These constraints go directly into our limitations section.</p>
-</section><section id="deliverable-3-results-implications-limitations-next-tests-24-pages" class="level2"><h2 class="anchored" data-anchor-id="deliverable-3-results-implications-limitations-next-tests-24-pages">Deliverable 3 — Results, Implications, Limitations, Next Tests (2–4 pages)</h2>
+<section id="chosen-method-last-click-attribution-with-session-based-channel-ranking" class="level3"><h3 class="anchored" data-anchor-id="chosen-method-last-click-attribution-with-session-based-channel-ranking">Chosen Method: Last-Click Attribution with Session-Based Channel Ranking</h3>
+<p>For this project, we used <strong>last-click attribution</strong> as our main method. We also used a simple <strong>channel ranking based on session volume</strong> as a second way to look at channel contribution.</p>
+<p><strong>Why this method fits our data:</strong></p>
+<p>Our dataset is already aggregated, which means it is grouped by day, channel, source, medium, device, and country. Because of that, we cannot see each user’s full journey across multiple sessions. Since we do not have complete user paths in this dataset, we cannot properly apply multi-touch methods like position-based attribution or Markov chain attribution.</p>
+<p>Last-click makes the most sense for the data we have because purchases are counted under the channel linked to that session in the dataset. This lets us see which channels are most connected to conversions in a simple and direct way.</p>
+<p><strong>Why this method fits the client:</strong></p>
+<p>Last-click is also the easiest model for the client to understand because it is similar to what GA4 normally shows in standard reports. This makes our results easier to explain and easier for NCMA SGV to use when making decisions.</p>
+<p><strong>Session-based channel ranking as a second view:</strong></p>
+<p>We also looked at session volume by channel to give more context. This helps us see which channels are bringing users to the site, even if those channels do not always lead directly to purchases. For example, a channel with many sessions but fewer purchases may still be important for awareness or early interest.</p>
+<p><strong>Why we did not use more advanced methods:</strong></p>
+<p>More advanced attribution methods, such as position-based or Markov chain models, need user-level path data with touchpoints in order. Our current dataset does not have that structure, so those methods would not be appropriate here. Also, the dataset covers a short time period and has a limited number of conversions, so a simpler method is a better fit for this milestone.</p>
+</section></section><section id="deliverable-3-results-implications-limitations-next-tests-24-pages" class="level2"><h2 class="anchored" data-anchor-id="deliverable-3-results-implications-limitations-next-tests-24-pages">Deliverable 3 — Results, Implications, Limitations, Next Tests (2–4 pages)</h2>
 <section id="attribution-module" class="level3"><h3 class="anchored" data-anchor-id="attribution-module">Attribution Module</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(arrow)</span>
@@ -2346,17 +2355,17 @@ event_dt: string</code></pre>
 # Groups:   source [11]
    source                         medium   total_sessions total_purchases
    &lt;chr&gt;                          &lt;chr&gt;             &lt;int&gt;           &lt;int&gt;
- 1 (direct)                       (none)              861               0
- 2 google                         organic              42               0
- 3 linkedin.com                   referral              3               0
- 4 link.edgepilot.com             referral              4               0
- 5 statics.teams.cdn.office.net   referral              2               0
- 6 bing                           organic               6               0
- 7 yahoo                          organic               1               0
- 8 ig                             social                2               0
- 9 statics.gov.teams.microsoft.us referral              1               0
-10 backlinks.live                 referral              1               0
-11 ncmahq.org                     referral              1               0</code></pre>
+ 1 bing                           organic               6               0
+ 2 (direct)                       (none)              861               0
+ 3 google                         organic              42               0
+ 4 yahoo                          organic               1               0
+ 5 linkedin.com                   referral              3               0
+ 6 ig                             social                2               0
+ 7 statics.gov.teams.microsoft.us referral              1               0
+ 8 backlinks.live                 referral              1               0
+ 9 statics.teams.cdn.office.net   referral              2               0
+10 ncmahq.org                     referral              1               0
+11 link.edgepilot.com             referral              4               0</code></pre>
 </div>
 </div>
 </section><section id="compare-to-last-click" class="level3"><h3 class="anchored" data-anchor-id="compare-to-last-click">Compare to last-click</h3>
